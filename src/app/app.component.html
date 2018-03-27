@@ -1,3 +1,25 @@
 <h1>
   {{title}}
 </h1>
+<div [style.background-color]="backgroundColor" [style.font-size.px]="50">Radixweb</div>
+<div [class.activate]="isAppliedClass" >Radixweb Software</div>
+<button (click)="changeClass()">Change</button>
+<form [formGroup]="candidateFormGroup">
+  <input type="text" formControlName="candidateName" />
+  <div *ngIf="candidateFormGroup.controls.candidateName.hasError('nameValidator')">Invalid Name</div>
+  <div *ngIf="candidateFormGroup.controls.candidateName.hasError('required')">Required Name</div>
+  <div formGroupName="jobOrder">
+    <input type="text" formControlName="jobOrderName" />
+    {{candidateFormGroup.controls.jobOrder.controls.jobOrderName.value}}
+  </div>
+  <button (click)="addSkill()"> Add Skill</button>
+  <div *ngFor="let skill of candidateFormGroup.controls.skills.controls; let num = index;">
+    <app-skill [skillFormGroup]="skill"></app-skill>
+    <!--<div [formGroup]="skill">
+      <input type="text" formControlName="skillName" />
+      <button (click)="removeSkill(num)">Remove</button>
+     </div>-->
+  </div>
+  <button [disabled]="!candidateFormGroup.valid">Submit</button>
+</form>
+
